@@ -38,12 +38,22 @@ async function run() {
         res.send(result)
     })
 
+
+
     //post single product
     app.post('/products',async(req,res) =>{
         const product = req.body
         const result = await productsCollection.insertOne(product)
         res.send(result)
     })
+
+    //single products details
+    app.get('/products/:id', async (req, res) => {
+        const id = req.params.id
+        const query = { _id: new ObjectId(id) }
+        const result = await productsCollection.findOne(query)
+        res.send(result)
+      })
 
     //add products api
     app.post('/carts',async(req,res) =>{
@@ -55,12 +65,7 @@ async function run() {
     //get all cart products
 
     app.get('/carts', async (req, res) => {
-        const email = req.query.email
-        if (!email) {
-          res.send([])
-        }
-        const query = { email: email }
-        const result = await cartsCollection.find(query).toArray()
+        const result = await cartsCollection.find().toArray()
         res.send(result)
       })
 
