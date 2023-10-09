@@ -7,8 +7,16 @@ const port = process.env.PORT || 5000
 
 //middlewere
 
-app.use(cors())
-app.use(express.json())
+const corsConfig = {
+    origin: '*',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+    }
+
+    app.use(cors(corsConfig))
+    app.options("", cors(corsConfig))
+    
+    app.use(express.json())
 
 
 
@@ -27,7 +35,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    //await client.connect();
 
     const productsCollection = client.db('jewllyShop').collection('products')
     const cartsCollection = client.db('jewllyShop').collection('carts')
