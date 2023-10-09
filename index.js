@@ -52,6 +52,20 @@ async function run() {
         res.send(result)
     })
 
+    //get all cart products
+
+    app.get('/carts', async (req, res) => {
+        const email = req.query.email
+        if (!email) {
+          res.send([])
+        }
+        const query = { email: email }
+        const result = await cartsCollection.find(query).toArray()
+        res.send(result)
+      })
+
+   
+
 
 
 
