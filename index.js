@@ -62,7 +62,22 @@ async function run() {
         res.send(result)
       })
 
-    //add products api
+      //single product details update
+
+      app.patch('/products/:id', async (req, res) => {
+        const id = req.params.id
+        const updatedData = req.body
+        const filter = { _id: new ObjectId(id) }
+        const updatedDoc = {
+          $set: {
+            ...updatedData
+          }
+        }
+        const result = await productsCollection.updateOne(filter, updatedDoc)
+        res.send(result)
+      })
+
+    //add products cart api
     app.post('/carts',async(req,res) =>{
         const cart = req.body
         const result = await cartsCollection.insertOne(cart)
