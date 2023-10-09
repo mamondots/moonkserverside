@@ -30,6 +30,7 @@ async function run() {
     await client.connect();
 
     const productsCollection = client.db('jewllyShop').collection('products')
+    const cartsCollection = client.db('jewllyShop').collection('carts')
 
     //get all products
     app.get('/products',async(req,res) =>{
@@ -41,6 +42,13 @@ async function run() {
     app.post('/products',async(req,res) =>{
         const product = req.body
         const result = await productsCollection.insertOne(product)
+        res.send(result)
+    })
+
+    //add products api
+    app.post('/carts',async(req,res) =>{
+        const cart = req.body
+        const result = await cartsCollection.insertOne(cart)
         res.send(result)
     })
 
